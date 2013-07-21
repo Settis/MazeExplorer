@@ -14,14 +14,13 @@ class Maze : public QObject
     Q_OBJECT
     explicit Maze(QObject *parent = 0);
 public:
-    static Maze* loadFromString(QString source);
-    static Maze* loadFromFile(QString fileName);
+    static Maze* loadFromString(const QString &source);
+    static Maze* loadFromFile(const QString &fileName);
     static Maze* generate(int x, int y, int numGates, int persentWalls);
     QString convertToString();
-    void writeToFile(QString fileName);
-    int x, y;
+    void writeToFile(const QString &fileName);
     vector<vector<bool> > walls;
-    set<Point> getNeighbors(Point point);
+    set<Point> getNeighbors(const Point &point);
     set<Point> getGates();
     bool checkPassability();
     int getPersentWalls();

@@ -11,7 +11,7 @@ Maze::Maze(QObject *parent) :
 {
 }
 
-set<Point> Maze::getNeighbors(Point point)
+set<Point> Maze::getNeighbors(const Point &point)
 {
     set<Point> allNeighbors;
     allNeighbors.insert(Point(point.first, point.second-1));
@@ -19,11 +19,11 @@ set<Point> Maze::getNeighbors(Point point)
     allNeighbors.insert(Point(point.first-1, point.second));
     allNeighbors.insert(Point(point.first+1, point.second));
     set<Point> result;
-    for (auto point = allNeighbors.begin(); point != allNeighbors.end(); ++point) {
-        if (point->first < 0 || point->second < 0 || point->second >= (int) walls.size() || point->first >= (int) walls[0].size())
+    for (auto neighbor : allNeighbors) {
+        if (neighbor.first < 0 || neighbor.second < 0 || neighbor.second >= (int) walls.size() || neighbor.first >= (int) walls[0].size())
             continue;
-        if (! walls[point->second][point->first])
-            result.insert(*point);
+        if (! walls[neighbor.second][neighbor.first])
+            result.insert(neighbor);
     }
     return result;
 }
@@ -91,14 +91,14 @@ int Maze::getPersentWalls()
     return wallsCnt*100/(x-2)/(y-2);
 }
 
-Maze * Maze::loadFromString(QString source)
+Maze * Maze::loadFromString(const QString &source)
 {
     Maze * maze = new Maze();
     auto list = source.split("\n", QString::SplitBehavior::SkipEmptyParts);
-    for (auto it = list.constBegin(); it != list.constEnd(); ++it) {
+    for (auto it : list) {
         vector<bool> row;
-        for (auto ch = it->begin(); ch != it->end(); ++ch)
-            if ((*ch) == '*')
+        for (auto ch : it)
+            if (ch == '*')
                 row.push_back(true);
             else
                 row.push_back(false);
@@ -107,7 +107,7 @@ Maze * Maze::loadFromString(QString source)
     return maze;
 }
 
-Maze *Maze::loadFromFile(QString fileName)
+Maze *Maze::loadFromFile(const QString &fileName)
 {
     QFile file(fileName);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -167,10 +167,10 @@ Maze *Maze::generate(int x, int y, int numGates, int persentWalls)
 QString Maze::convertToString()
 {
     QStringList list;
-    for (auto row = walls.begin(); row != walls.end(); ++row) {
+    for (auto row : walls) {
         QString string;
-        for (auto point = row->begin(); point != row->end(); ++point)
-            if (*point)
+        for (auto point : row)
+            if (point)
                 string.append('*');
             else
                 string.append(' ');
@@ -179,7 +179,7 @@ QString Maze::convertToString()
     return list.join("\n");
 }
 
-void Maze::writeToFile(QString fileName)
+void Maze::writeToFile(const QString &fileName)
 {
     QString data = convertToString();
     QFile file(fileName);
