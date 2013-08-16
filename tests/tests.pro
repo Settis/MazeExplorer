@@ -16,7 +16,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    mazeTest.cpp
+    mazeTest.cpp \
+    robotTest.cpp \
+    engineTest.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../engine/release/ -lengine
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../engine/debug/ -lengine
@@ -30,4 +32,6 @@ else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../engine/d
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../engine/libengine.a
 
 HEADERS += \
-    mazeTest.h
+    mazeTest.h \
+    robotTest.h \
+    engineTest.h

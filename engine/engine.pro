@@ -11,10 +11,16 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += engine.cpp \
-    maze.cpp
+    maze.cpp \
+    robot.cpp \
+    ilistener.cpp \
+    robotcontainer.cpp
 
 HEADERS += engine.h \
-    maze.h
+    maze.h \
+    robot.h \
+    ilistener.h \
+    robotcontainer.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

@@ -134,3 +134,36 @@ void MazeTest::checkPassabilityNegative()
     QCOMPARE(maze->checkPassability(), false);
     delete maze;
 }
+
+void MazeTest::getRooms()
+{
+    QString mazeString =
+            "*****\n"
+            "* * *\n"
+            "*** *";
+    Maze* maze = Maze::loadFromString(mazeString);
+    QCOMPARE(maze->getRooms(), 3);
+    delete maze;
+}
+
+void MazeTest::isRoomAvailable()
+{
+    QString mazeString =
+            "*****\n"
+            "* * *\n"
+            "*** *";
+    Maze* maze = Maze::loadFromString(mazeString);
+    QCOMPARE(maze->isRoomAvailable(Point(3, 1)), true);
+    delete maze;
+}
+
+void MazeTest::isRoomAvailableOutOfBorder()
+{
+    QString mazeString =
+            "*****\n"
+            "* * *\n"
+            "*** *";
+    Maze* maze = Maze::loadFromString(mazeString);
+    QCOMPARE(maze->isRoomAvailable(Point(0, -1)), false);
+    delete maze;
+}

@@ -91,6 +91,23 @@ int Maze::getPersentWalls()
     return wallsCnt*100/(x-2)/(y-2);
 }
 
+int Maze::getRooms()
+{
+    int cnt = 0;
+    for (auto row : walls)
+        for (auto point : row)
+            if (!point)
+                ++cnt;
+    return cnt;
+}
+
+bool Maze::isRoomAvailable(const Point &room)
+{
+    return room.first >= 0 && room.second >= 0 &&
+            room.second < walls.size() && room.first < walls[0].size() &&
+            !walls[room.second][room.first];
+}
+
 Maze * Maze::loadFromString(const QString &source)
 {
     Maze * maze = new Maze();

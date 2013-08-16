@@ -22,6 +22,10 @@ private slots:
     void checkPassabilitySimple();
     void checkPassabilityWithoutGates();
     void checkPassabilityNegative();
+    void getRooms();
+    void isRoomAvailable();
+    void isRoomAvailableOutOfBorder();
+
 };
 
 #endif // MAZETEST_H

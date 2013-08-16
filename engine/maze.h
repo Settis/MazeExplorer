@@ -24,6 +24,8 @@ public:
     set<Point> getGates();
     bool checkPassability();
     int getPersentWalls();
+    int getRooms();
+    bool isRoomAvailable(const Point &room);
 signals:
 
 public slots:
