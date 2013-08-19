@@ -21,6 +21,7 @@ public:
     static bool getStep(Step *step, const Point &from, const Point &to);
     void _wasMovedTo(const Point &point);
     virtual void wasMotedTo(const Point &point);
+    virtual ~Robot();
 signals:
     
 public slots:

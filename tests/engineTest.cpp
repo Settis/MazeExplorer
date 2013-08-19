@@ -104,6 +104,9 @@ public:
             QCOMPARE(robots[j].robot->visitedPoints, container[j].robot->visitedPoints);
         }
     }
+
+    ~TestListener() {
+    }
 };
 
 void EngineTest::listeners()
@@ -120,7 +123,7 @@ void EngineTest::listeners()
     vector<Point> initials;
     initials.push_back(Point(1,3));
     initials.push_back(Point(1,0));
-    TestListener testListener;
+    TestListener * testListener = new TestListener();
     vector<RobotContainer> step1;
     Robot buttomRobot1;
     buttomRobot1.visitedPoints.insert(Point(1,3));
@@ -159,10 +162,10 @@ void EngineTest::listeners()
     topRobot2Container.currentPosition = Point(1,2);
     topRobot2Container.lastPosition = Point(1,1);
     step2.push_back(topRobot2Container);
-    testListener.robotStates.push_back(step1);
-    testListener.robotStates.push_back(step2);
+    testListener->robotStates.push_back(step1);
+    testListener->robotStates.push_back(step2);
     Engine engine(maze, robots, initials);
-    engine.listeners.push_back(&testListener);
+    engine.listeners.push_back(testListener);
     engine.doMainLogic();
     delete maze;
 }

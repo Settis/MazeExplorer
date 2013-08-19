@@ -9,7 +9,7 @@ class IListener
 public:
     IListener();
     virtual void onStep(std::vector<RobotContainer> &robots);
-    virtual ~IListener(){}
+    virtual ~IListener();
     
 signals:
     

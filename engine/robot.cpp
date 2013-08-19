@@ -79,6 +79,10 @@ void Robot::wasMotedTo(const Point &UNUSED)
 {
 }
 
+Robot::~Robot()
+{
+}
+
 //inline bool operator ==(const Robot &r1, const Robot &r2) {
 //    return r1.visitedPoints == r2.visitedPoints;
 //}

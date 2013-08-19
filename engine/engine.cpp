@@ -37,6 +37,8 @@ Engine::~Engine()
 {
     for (RobotContainer container : robots)
         delete container.robot;
+    for (IListener* listener : listeners)
+        delete listener;
 }
 
 Point operator +(const Point &point, Step &step) {

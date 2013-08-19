@@ -3,6 +3,9 @@
 #include <QString>
 #include <iostream>
 #include "maze.h"
+#include "pureRandomRobot.h"
+#include "engine.h"
+#include "progressLogger.h"
 
 int tryReadInt(QString string) {
     bool isOk;
@@ -16,6 +19,16 @@ int tryReadInt(QString string) {
 void printGenMazeHelp() {
     std::cout << "This command generate new maze and save it into file.\n"
                  "Usage: mazeExplorer gen fileName x_size y_size num_gates persent_of_walls\n";
+}
+
+void printRunHelp() {
+    std::cout << "This command run simulator.\n"
+                 "Usage: mazeExplorer run robotName robotCount mazeFile\n";
+}
+
+void printAvailableRobots() {
+    std::cout << "Available robots are:\n"
+                 "  pureRandom\n";
 }
 
 void printHelp() {
@@ -41,6 +54,29 @@ void generateMaze(QStringList &args) {
     delete maze;
 }
 
+void run(QStringList &args) {
+    if (args.length() == 2 || args.at(2) == "help") {
+        printRunHelp();
+        return;
+    }
+    QString robotName = args.at(2);
+    int robotCount = tryReadInt(args.at(3));
+    QString mazeFile = args.at(4);
+    vector<Robot*> robots;
+    for (int i=0; i<robotCount; ++i) {
+        if (robotName == "pureRandom")
+            robots.push_back(new PureRandomRobot());
+        else {
+            printAvailableRobots();
+            exit(1);
+        }
+    }
+    Maze * maze = Maze::loadFromFile(mazeFile);
+    Engine engine(maze, robots);
+    engine.listeners.push_back(new ProgressLogger());
+    engine.doMainLogic();
+}
+
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
@@ -53,6 +89,8 @@ int main(int argc, char *argv[])
     QString command = args.at(1);
     if (command == "gen")
         generateMaze(args);
+    else if (command == "run")
+        run(args);
     else
         printHelp();
     return 0;
