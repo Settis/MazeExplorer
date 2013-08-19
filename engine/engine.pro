@@ -16,7 +16,8 @@ SOURCES += engine.cpp \
     ilistener.cpp \
     robotcontainer.cpp \
     pureRandomRobot.cpp \
-    progressLogger.cpp
+    progressLogger.cpp \
+    randomWalker.cpp
 
 HEADERS += engine.h \
     maze.h \
@@ -24,7 +25,9 @@ HEADERS += engine.h \
     ilistener.h \
     robotcontainer.h \
     pureRandomRobot.h \
-    progressLogger.h
+    progressLogger.h \
+    randomWalker.h
+
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

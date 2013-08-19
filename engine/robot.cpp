@@ -12,6 +12,19 @@
 Robot::Robot(QObject *parent) :
     QObject(parent)
 {
+    isMakeSimpleStep = false;
+}
+
+Step Robot::_makeStep(const Point &current, const Point &prev, const set<Point> &neighbors)
+{
+    if (isMakeSimpleStep) {
+        Step step = makeSimpleStep(current, prev, neighbors);
+        if (step == NA)
+            return makeStep(current, prev, neighbors);
+        else
+            return step;
+    } else
+        return makeStep(current, prev, neighbors);
 }
 
 Step Robot::makeStep(const Point &UNUSED(current), const Point &UNUSED(prev), const set<Point> &UNUSED(neighbors))
@@ -20,17 +33,17 @@ Step Robot::makeStep(const Point &UNUSED(current), const Point &UNUSED(prev), co
 }
 
 
-bool Robot::makeSimpleStep(Step *step, const Point &current, const Point &prev, const set<Point> &neighbors)
+Step Robot::makeSimpleStep(const Point &current, const Point &prev, const set<Point> &neighbors)
 {
     if (neighbors.size() == 1)
-        return getStep(step, current, *neighbors.begin());
+        return getStep(current, *neighbors.begin());
     if (neighbors.size() == 2 && current != prev) {
         set<Point> copy(neighbors);
         copy.erase(prev);
         if (copy.size() == 1)
-            return getStep(step, current, *copy.begin());
+            return getStep(current, *copy.begin());
     }
-    return false;
+    return NA;
 }
 
 void Robot::_mergeKnowledge(const Robot &robot)
@@ -40,27 +53,19 @@ void Robot::_mergeKnowledge(const Robot &robot)
 }
 
 
-bool Robot::getStep(Step *step, const Point &from, const Point &to)
+Step Robot::getStep(const Point &from, const Point &to)
 {
     int dx = to.first - from.first;
     int dy = to.second - from.second;
-    if (dx == -1 && dy == 0) {
-        *step = LEFT;
-        return true;
-    }
-    if (dx == 1 && dy == 0) {
-        *step = RIGHT;
-        return true;
-    }
-    if (dx == 0 && dy == -1) {
-        *step = UP;
-        return true;
-    }
-    if (dx == 0 && dy == 1) {
-        *step = DOWN;
-        return true;
-    }
-    return false;
+    if (dx == -1 && dy == 0)
+        return LEFT;
+    if (dx == 1 && dy == 0)
+        return RIGHT;
+    if (dx == 0 && dy == -1)
+        return UP;
+    if (dx == 0 && dy == 1)
+        return DOWN;
+    return NA;
 }
 
 void Robot::_wasMovedTo(const Point &point)

@@ -55,7 +55,7 @@ Point operator +(const Point &point, Step &step) {
 void Engine::doStep()
 {
     for (RobotContainer &container : robots) {
-        Step step = container.robot->makeStep(container.currentPosition, container.lastPosition, maze->getNeighbors(container.currentPosition));
+        Step step = container.robot->_makeStep(container.currentPosition, container.lastPosition, maze->getNeighbors(container.currentPosition));
         Point nextPoint = container.currentPosition + step;
         container.lastPosition = container.currentPosition;
         if (maze->isRoomAvailable(nextPoint)) {

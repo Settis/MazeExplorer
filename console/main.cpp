@@ -6,6 +6,7 @@
 #include "pureRandomRobot.h"
 #include "engine.h"
 #include "progressLogger.h"
+#include "randomWalker.h"
 
 int tryReadInt(QString string) {
     bool isOk;
@@ -28,7 +29,8 @@ void printRunHelp() {
 
 void printAvailableRobots() {
     std::cout << "Available robots are:\n"
-                 "  pureRandom\n";
+                 "  pureRandom\n"
+                 "  randomWalker\n";
 }
 
 void printHelp() {
@@ -66,6 +68,8 @@ void run(QStringList &args) {
     for (int i=0; i<robotCount; ++i) {
         if (robotName == "pureRandom")
             robots.push_back(new PureRandomRobot());
+        else if (robotName == "randomWalker")
+            robots.push_back(new RandomWalker());
         else {
             printAvailableRobots();
             exit(1);
