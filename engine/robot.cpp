@@ -12,19 +12,10 @@
 Robot::Robot(QObject *parent) :
     QObject(parent)
 {
-    isMakeSimpleStep = false;
 }
 
-Step Robot::_makeStep(const Point &current, const Point &prev, const set<Point> &neighbors)
+void Robot::init(int x, int y)
 {
-    if (isMakeSimpleStep) {
-        Step step = makeSimpleStep(current, prev, neighbors);
-        if (step == NA)
-            return makeStep(current, prev, neighbors);
-        else
-            return step;
-    } else
-        return makeStep(current, prev, neighbors);
 }
 
 Step Robot::makeStep(const Point &UNUSED(current), const Point &UNUSED(prev), const set<Point> &UNUSED(neighbors))

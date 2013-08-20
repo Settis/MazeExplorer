@@ -17,7 +17,8 @@ SOURCES += engine.cpp \
     robotcontainer.cpp \
     pureRandomRobot.cpp \
     progressLogger.cpp \
-    randomWalker.cpp
+    randomWalker.cpp \
+    determinRobot.cpp
 
 HEADERS += engine.h \
     maze.h \
@@ -26,7 +27,8 @@ HEADERS += engine.h \
     robotcontainer.h \
     pureRandomRobot.h \
     progressLogger.h \
-    randomWalker.h
+    randomWalker.h \
+    determinRobot.h
 
 unix:!symbian {
     maemo5 {

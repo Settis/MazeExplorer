@@ -11,11 +11,9 @@ enum Step{
 class Robot : public QObject
 {
     Q_OBJECT
-protected:
-    bool isMakeSimpleStep;
 public:
     explicit Robot(QObject *parent = 0);
-    Step _makeStep(const Point &current, const Point &prev, const set<Point> &neighbors);
+    virtual void init(int x, int y);
     virtual Step makeStep(const Point &current, const Point &prev, const set<Point> &neighbors);
     static Step makeSimpleStep(const Point &current, const Point &prev, const set<Point> &neighbors);
     set<Point> visitedPoints;

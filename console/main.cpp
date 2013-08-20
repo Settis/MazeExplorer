@@ -7,6 +7,7 @@
 #include "engine.h"
 #include "progressLogger.h"
 #include "randomWalker.h"
+#include "determinRobot.h"
 
 int tryReadInt(QString string) {
     bool isOk;
@@ -22,15 +23,17 @@ void printGenMazeHelp() {
                  "Usage: mazeExplorer gen fileName x_size y_size num_gates persent_of_walls\n";
 }
 
-void printRunHelp() {
-    std::cout << "This command run simulator.\n"
-                 "Usage: mazeExplorer run robotName robotCount mazeFile\n";
-}
-
 void printAvailableRobots() {
     std::cout << "Available robots are:\n"
                  "  pureRandom\n"
-                 "  randomWalker\n";
+                 "  randomWalker\n"
+                 "  determin\n";
+}
+
+void printRunHelp() {
+    std::cout << "This command run simulator.\n"
+                 "Usage: mazeExplorer run robotName robotCount mazeFile\n";
+    printAvailableRobots();
 }
 
 void printHelp() {
@@ -70,6 +73,8 @@ void run(QStringList &args) {
             robots.push_back(new PureRandomRobot());
         else if (robotName == "randomWalker")
             robots.push_back(new RandomWalker());
+        else if (robotName == "determin")
+            robots.push_back(new DeterminRobot());
         else {
             printAvailableRobots();
             exit(1);
