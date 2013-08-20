@@ -136,6 +136,7 @@ Maze *Maze::generate(int x, int y, int numGates, int persentWalls)
 {
     Maze * maze = new Maze();
     // make borders
+    std::cout << "Make borders ... ";
     vector<bool> fillRow;
     for (int i=0; i<x; ++i)
         fillRow.push_back(true);
@@ -148,6 +149,7 @@ Maze *Maze::generate(int x, int y, int numGates, int persentWalls)
     for (int i=1; i<y-1; ++i)
         maze->walls.push_back(vector<bool>(middleRow));
     maze->walls.push_back(vector<bool>(fillRow));
+    std::cout << "Done\nMake gates ... ";
     // make gates
     vector<Point> borders;
     for (int i=1; i<x-1; ++i) {
@@ -162,6 +164,8 @@ Maze *Maze::generate(int x, int y, int numGates, int persentWalls)
     int effectiveGates = min(numGates, (int) borders.size());
     for (int i=0; i<effectiveGates; ++i)
         maze->walls[borders[i].second][borders[i].first] = false;
+    std::cout << "Done\nMake walls ... shuffle ";
+    std::cout.flush();
     // make walls
     int wallsCnt = (x-2)*(y-2)*persentWalls/100;
     vector<Point> walls;
@@ -169,6 +173,8 @@ Maze *Maze::generate(int x, int y, int numGates, int persentWalls)
         for (int j=1; j<y-1; ++j)
             walls.push_back(Point(i,j));
     std::random_shuffle(walls.begin(), walls.end());
+    std::cout << "done";
+    std::cout.flush();
     for (int i=0; i<(int)walls.size()&&wallsCnt>0; ++i) {
         Point point = walls[i];
         maze->walls[point.second][point.first] = true;
@@ -176,7 +182,10 @@ Maze *Maze::generate(int x, int y, int numGates, int persentWalls)
             --wallsCnt;
         else
             maze->walls[point.second][point.first] = false;
+        std::cout << "\rMake walls ... try " << i << " need " << wallsCnt;
+        std::cout.flush();
     }
+    std::cout << "\rMake walls ... Done                                     \n";
     return maze;
 }
 
