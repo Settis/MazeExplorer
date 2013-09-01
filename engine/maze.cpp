@@ -67,10 +67,27 @@ bool Maze::checkPassability()
         Point point = points.front();
         points.pop();
         passedPoints[point.second][point.first] = true;
-        set<Point> neighbors = getNeighbors(point);
-        for (auto it = neighbors.begin(); it != neighbors.end(); ++it)
-            if (!passedPoints[it->second][it->first])
-                points.push(*it);
+        int f = point.first - 1,
+            s = point.second;
+        if (f >= 0 && s >= 0 && s < x && f < y)
+            if (!walls[s][f] && !passedPoints[s][f])
+                points.push(Point(f, s));
+        f = point.first + 1;
+        s = point.second;
+        if (f >= 0 && s >= 0 && s < x && f < y)
+            if (!walls[s][f] && !passedPoints[s][f])
+                points.push(Point(f, s));
+        f = point.first;
+        s = point.second + 1;
+        if (f >= 0 && s >= 0 && s < x && f < y)
+            if (!walls[s][f] && !passedPoints[s][f])
+                points.push(Point(f, s));
+        f = point.first;
+        s = point.second - 1;
+        if (f >= 0 && s >= 0 && s < x && f < y)
+            if (!walls[s][f] && !passedPoints[s][f])
+                points.push(Point(f, s));
+
     }
     for (int i=0; i<x; ++i)
         for (int j=0; j<y; ++j)
