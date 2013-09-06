@@ -8,6 +8,7 @@
 #include "progressLogger.h"
 #include "randomWalker.h"
 #include "determinRobot.h"
+#include "aaLogger.h"
 
 int tryReadInt(QString string) {
     bool isOk;
@@ -32,7 +33,7 @@ void printAvailableRobots() {
 
 void printRunHelp() {
     std::cout << "This command run simulator.\n"
-                 "Usage: mazeExplorer run robotName robotCount mazeFile\n";
+                 "Usage: mazeExplorer run robotName robotCount mazeFile [aaLog]\n";
     printAvailableRobots();
 }
 
@@ -40,6 +41,7 @@ void printHelp() {
     std::cout << "Usage: mazeExplorer command [agruments]\n"
                  "Available commands are:\n"
                  "  gen\n"
+                 "  run\n"
                  "  help\n";
 }
 
@@ -83,6 +85,11 @@ void run(QStringList &args) {
     Maze * maze = Maze::loadFromFile(mazeFile);
     Engine engine(maze, robots);
     engine.listeners.push_back(new ProgressLogger());
+    if (args.length() >= 6 && args.at(5) == "aaLog") {
+        aaLogger * aaLog = new aaLogger();
+        aaLog->init(maze);
+        engine.listeners.push_back(aaLog);
+    }
     engine.doMainLogic();
 }
 
