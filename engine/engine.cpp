@@ -91,11 +91,15 @@ void Engine::meets()
         }
 }
 
-
-void Engine::doMainLogic()
+void Engine::init()
 {
     for (const RobotContainer & robotContainer : robots)
         robotContainer.robot->init(maze->walls[0].size(), maze->walls.size());
+}
+
+void Engine::doMainLogic()
+{
+    init();
     do {
         doStep();
         meets();

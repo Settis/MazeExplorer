@@ -15,8 +15,8 @@ class Engine : public QObject
     Q_OBJECT
     Maze * maze;
     unsigned int mazeRooms;
-    vector<RobotContainer> robots;
 public:
+    vector<RobotContainer> robots;
     vector<IListener *> listeners;
     Engine(Maze *maze, vector<Robot*> robots);
     Engine(Maze *maze, vector<Robot*> robots, vector<Point> initials);
@@ -25,6 +25,7 @@ public:
     void doMainLogic();
     bool isAllKnownMaze();
     void meets();
+    void init();
 };
 
 #endif // ENGINE_H
