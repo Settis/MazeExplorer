@@ -19,7 +19,8 @@ SOURCES += engine.cpp \
     progressLogger.cpp \
     randomWalker.cpp \
     determinRobot.cpp \
-    aaLogger.cpp
+    aaLogger.cpp \
+    deepLookRobot.cpp
 
 HEADERS += engine.h \
     maze.h \
@@ -30,7 +31,8 @@ HEADERS += engine.h \
     progressLogger.h \
     randomWalker.h \
     determinRobot.h \
-    aaLogger.h
+    aaLogger.h \
+    deepLookRobot.h
 
 unix:!symbian {
     maemo5 {

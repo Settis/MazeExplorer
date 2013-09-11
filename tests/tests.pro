@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     mazeTest.cpp \
     robotTest.cpp \
     engineTest.cpp \
-    determinRobotTest.cpp
+    determinRobotTest.cpp \
+    deepLookRobotTest.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../engine/release/ -lengine
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../engine/debug/ -lengine
@@ -36,6 +37,7 @@ HEADERS += \
     mazeTest.h \
     robotTest.h \
     engineTest.h \
-    determinRobotTest.h
+    determinRobotTest.h \
+    deepLookRobotTest.h
 
 QMAKE_CXXFLAGS += -std=c++0x

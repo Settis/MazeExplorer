@@ -9,6 +9,7 @@
 #include "randomWalker.h"
 #include "determinRobot.h"
 #include "aaLogger.h"
+#include "deepLookRobot.h"
 
 int tryReadInt(QString string) {
     bool isOk;
@@ -28,7 +29,8 @@ void printAvailableRobots() {
     std::cout << "Available robots are:\n"
                  "  pureRandom\n"
                  "  randomWalker\n"
-                 "  determin\n";
+                 "  determin\n"
+                 "  deepLook\n";
 }
 
 void printRunHelp() {
@@ -70,6 +72,7 @@ void run(QStringList &args) {
     int robotCount = tryReadInt(args.at(3));
     QString mazeFile = args.at(4);
     vector<Robot*> robots;
+    Maze * maze = Maze::loadFromFile(mazeFile);
     for (int i=0; i<robotCount; ++i) {
         if (robotName == "pureRandom")
             robots.push_back(new PureRandomRobot());
@@ -77,12 +80,13 @@ void run(QStringList &args) {
             robots.push_back(new RandomWalker());
         else if (robotName == "determin")
             robots.push_back(new DeterminRobot());
+        else if (robotName == "deepLook")
+            robots.push_back(new DeepLookRobot(maze));
         else {
             printAvailableRobots();
             exit(1);
         }
     }
-    Maze * maze = Maze::loadFromFile(mazeFile);
     Engine engine(maze, robots);
     engine.listeners.push_back(new ProgressLogger());
     if (args.length() >= 6 && args.at(5) == "aaLog") {

@@ -1,9 +1,8 @@
-#include "determinRobotTest.h"
-#include "determinRobot.h"
-#include "robot.h"
+#include "deepLookRobotTest.h"
+#include "deepLookRobot.h"
 #include "engine.h"
 
-DeterminRobotTest::DeterminRobotTest(QObject *parent) :
+DeepLookRobotTest::DeepLookRobotTest(QObject *parent) :
     QObject(parent)
 {
     points.push_back(Point(1,3));
@@ -11,13 +10,14 @@ DeterminRobotTest::DeterminRobotTest(QObject *parent) :
     points.push_back(Point(2,2));
     points.push_back(Point(2,1));
     points.push_back(Point(2,2));
-    points.push_back(Point(2,1));
-    points.push_back(Point(2,2));
+//  points.push_back(Point(2,1));
+//  points.push_back(Point(2,2));
+//  These points are difference with DeterminRobot
     points.push_back(Point(2,3));
     points.push_back(Point(3,3));
 }
 
-void DeterminRobotTest::run()
+void DeepLookRobotTest::run()
 {
     QString mazeString =
             "*****\n"
@@ -27,7 +27,7 @@ void DeterminRobotTest::run()
             "*****";
     Maze* maze = Maze::loadFromString(mazeString);
     vector<Robot*> robots;
-    robots.push_back(new DeterminRobot());
+    robots.push_back(new DeepLookRobot(maze));
     Engine engine(maze, robots);
     engine.init();
     for (Point point : points) {
