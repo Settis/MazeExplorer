@@ -8,13 +8,14 @@ Engine::Engine(Maze * maze, vector<Robot *> robots) : QObject()
     set<Point> gates = maze->getGates();
     vector<Point> gatesVector;
     std::copy(gates.begin(), gates.end(), std::back_inserter(gatesVector));
-    for (Robot *robot : robots) {
-        Point initial = gatesVector[rand() % gatesVector.size()];
+    std::random_shuffle(gatesVector.begin(), gatesVector.end());
+    for (int i=0; i<robots.size(); ++i) {
+        Point initial = gatesVector[i % gatesVector.size()];
         RobotContainer container;
-        container.robot = robot;
+        container.robot = robots[i];
         container.currentPosition = initial;
         container.lastPosition = initial;
-        robot->_wasMovedTo(initial);
+        container.robot->_wasMovedTo(initial);
         this->robots.push_back(container);
     }
 }

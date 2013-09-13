@@ -40,6 +40,7 @@ if (!maze->walls[s][f] && !passedPoints[f][s]) { \
 Step DeepLookRobot::makeStep(const Point &current, const Point &prev, const set<Point> &neighbors)
 {
     visitsMap[prev.first][prev.second] = true;
+    visitsMap[current.first][current.second] = true;
     if (!steps.isEmpty()) {
         Point * point = steps.pop();
         Step step = getStep(current, *point);
@@ -58,7 +59,7 @@ Step DeepLookRobot::makeStep(const Point &current, const Point &prev, const set<
     for (int i=0; i<x; ++i)
         for (int j=0; j<y; ++j)
             passedPoints[i][j] = false;
-    while(true) {
+    while(!points.isEmpty()) {
         Point * point = points.front();
         points.pop_front();
         passedPoints[point->first][point->second] = true;
@@ -76,28 +77,50 @@ Step DeepLookRobot::makeStep(const Point &current, const Point &prev, const set<
         processPoint
         delete point;
     }
-    Point * pIter = destination;
-    while (true) {
-        Point * point = prevPointMap[pIter->first][pIter->second];
-        prevPointMap[pIter->first][pIter->second] = NULL;
-        if (point == NULL)
-            break;
-        steps.push(point);
-        pIter = point;
+    Step step;
+    if (destination == NULL) {
+        step = STOP;
+        while (!points.isEmpty()) {
+            Point * point = points.front();
+            points.pop_front();
+            delete point;
+        }
+    } else {
+        Point * pIter = destination;
+        while (true) {
+            Point * point = prevPointMap[pIter->first][pIter->second];
+            prevPointMap[pIter->first][pIter->second] = NULL;
+            if (point == NULL)
+                break;
+            steps.push(point);
+            pIter = point;
+        }
+        delete destination;
+        while (!points.isEmpty()) {
+            Point * point = points.front();
+            points.pop_front();
+            delete point;
+        }
+        destination = steps.pop();
+        delete destination;
+        //this is a point where is robot right now
+        destination = steps.pop();
+        step = getStep(current, *destination);
+        delete destination;
     }
-    delete destination;
-    while (!points.isEmpty()) {
-        Point * point = points.front();
-        points.pop_front();
+    return step;
+}
+
+void DeepLookRobot::mergeKnowledge(const Robot &robot)
+{
+    bool ** rvm = ((DeepLookRobot*)&robot)->visitsMap;
+    for (int i=0; i<x; ++i)
+        for (int j=0; j<y; ++j)
+            visitsMap[i][j] |= rvm[i][j];
+    while (!steps.isEmpty()) {
+        Point * point = steps.pop();
         delete point;
     }
-    destination = steps.pop();
-    delete destination;
-    //this is a point where is robot right now
-    destination = steps.pop();
-    Step step = getStep(current, *destination);
-    delete destination;
-    return step;
 }
 
 void DeepLookRobot::resetPPCell(Point * point, int i, int j) {

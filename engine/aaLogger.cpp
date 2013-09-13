@@ -9,7 +9,6 @@ aaLogger::aaLogger()
     step = 0;
 }
 
-
 void aaLogger::init(Maze *maze)
 {
     x = maze->walls.size();
@@ -47,7 +46,6 @@ void aaLogger::onStep(std::vector<RobotContainer> &robots)
     *textStream << "Step: " << ++step << "\n" << flush;
     for (int i=0; i<robots.size(); ++i)
         *textStream << "Robot '" << (char)('1' + i) << "' : " << robots[i].robot->visitedPoints.size() << "\n" << flush;
-    *textStream << "\n\n";
     for (int i=0; i<robots.size(); ++i)
         forPrint[robots[i].currentPosition.second][robots[i].currentPosition.first] = ' ';
 }
