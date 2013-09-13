@@ -36,3 +36,11 @@ Step DeterminRobot::makeStep(const Point &current, const Point &prev, const set<
         }
     return getStep(current, next);
 }
+
+void DeterminRobot::mergeKnowledge(const Robot &robot)
+{
+    unsigned int** rvm = ((DeterminRobot*)&robot)->visitsMap;
+    for (int i=0; i<x; ++i)
+        for (int j=0; j<y; ++j)
+            visitsMap[i][j] += rvm[i][j];
+}

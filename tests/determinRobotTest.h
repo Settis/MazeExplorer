@@ -8,7 +8,6 @@
 class DeterminRobotTest : public QObject
 {
     Q_OBJECT
-    vector<Point> points;
 public:
     explicit DeterminRobotTest(QObject *parent = 0);
 
@@ -16,7 +15,7 @@ signals:
 
 private slots:
     void run();
-
+    void encounter();
 };
 
 #endif // DETERMINROBOTTEST_H
