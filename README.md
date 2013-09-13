@@ -7,7 +7,7 @@ Idea
 Idea comes from [Collective map making](https://www.ftj.agh.edu.pl/~kulakowski/ssol.pdf) 
 presentation by [Prof. dr hab. Krzysztof Kułakowski](https://www.ftj.agh.edu.pl/~kulakowski/).
 
-This program simulates how robots explore a maze. You have a maze with some gates. 
+This program [simulates](#run-simulate) how robots explore a maze. You have a maze with some gates. 
 Robots come to maze through these gates and walk through the maze. Also if they meets, they merge knowledge.
 
 How to
@@ -19,7 +19,7 @@ For build programm on Linux you can run:
 
 Then you get binary file *console/mazeExplorer*
 
-Let's generate a maze (run *'mazeExplorer gen help'* for help):
+Let's generate a maze (run [*'mazeExplorer gen help'*](#generate-new-maze) for help):
 
     $ ./mazeExplorer gen maze 10 10 2 100
     Make borders ... Done
@@ -38,7 +38,7 @@ Let's generate a maze (run *'mazeExplorer gen help'* for help):
     *    *****
     **********
 
-Then you can run robots (run *'mazeExplorer gen help'* for help):
+Then you can run robots (run [*'mazeExplorer gen help'*](#run-simulate) for help):
 
     $ ./mazeExplorer run randomWalker 2 maze aaLog
 
@@ -69,10 +69,10 @@ Usage: mazeExplorer run robotName robotCount mazeFile [aaLog]
 
 Available robots are:
 
-- pureRandom
-- randomWalker
-- determin
-- deepLook
+- [pureRandom](#pure-random-robot)
+- [randomWalker](#random-walker-robot)
+- [determin](#determin-robot)
+- [deepLook](#deep-look-robot)
 
 On running program write *progress.csv* file. File contain information about how many rooms robot visited. 
 Colums for each robots and one row per simulation step.
