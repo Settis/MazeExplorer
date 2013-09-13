@@ -49,6 +49,12 @@ set<Point> Maze::getGates()
     return gates;
 }
 
+#define processPoint if (f >= 0 && s >= 0 && s < x && f < y) \
+if (!walls[s][f] && !passedPoints[s][f]) { \
+    points.push(Point(f, s)); \
+    passedPoints[s][f] = true; \
+}
+
 bool Maze::checkPassability()
 {
     // check gates numbers
@@ -69,25 +75,16 @@ bool Maze::checkPassability()
         passedPoints[point.second][point.first] = true;
         int f = point.first - 1,
             s = point.second;
-        if (f >= 0 && s >= 0 && s < x && f < y)
-            if (!walls[s][f] && !passedPoints[s][f])
-                points.push(Point(f, s));
+        processPoint
         f = point.first + 1;
         s = point.second;
-        if (f >= 0 && s >= 0 && s < x && f < y)
-            if (!walls[s][f] && !passedPoints[s][f])
-                points.push(Point(f, s));
+        processPoint
         f = point.first;
         s = point.second + 1;
-        if (f >= 0 && s >= 0 && s < x && f < y)
-            if (!walls[s][f] && !passedPoints[s][f])
-                points.push(Point(f, s));
+        processPoint
         f = point.first;
         s = point.second - 1;
-        if (f >= 0 && s >= 0 && s < x && f < y)
-            if (!walls[s][f] && !passedPoints[s][f])
-                points.push(Point(f, s));
-
+        processPoint
     }
     for (int i=0; i<x; ++i)
         for (int j=0; j<y; ++j)
