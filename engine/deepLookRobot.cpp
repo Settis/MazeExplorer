@@ -54,7 +54,7 @@ Step DeepLookRobot::makeStep(const Point &current, const Point &prev, const set<
     resetPPCell(NULL, current.first, current.second);
     QQueue<Point*> points;
     points.push_back(new Point(current.first, current.second));
-    Point *destination;
+    Point *destination = NULL;
     bool passedPoints[x][y];
     for (int i=0; i<x; ++i)
         for (int j=0; j<y; ++j)

@@ -104,3 +104,50 @@ void DeepLookRobotTest::encounter()
     QCOMPARE(engine.isAllKnownMaze(), true);
     delete maze;
 }
+
+void DeepLookRobotTest::needWait()
+{
+    QString mazeString =
+            "** ***\n"
+            "** ***\n"
+            "** ***\n"
+            "     *\n"
+            "******";
+
+    vector<Point> points0, points1;
+    points0.push_back(Point(2,1));
+    points0.push_back(Point(2,2));
+    points0.push_back(Point(2,3));
+
+    points1.push_back(Point(1,3));
+    points1.push_back(Point(2,3));
+    points1.push_back(Point(2,2));
+
+    //encounter!
+
+    points0.push_back(Point(3,3));
+    points0.push_back(Point(4,3));
+    points0.push_back(Point(4,3));
+
+    points1.push_back(Point(2,3));
+    points1.push_back(Point(3,3));
+    points1.push_back(Point(4,3));
+
+    Maze* maze = Maze::loadFromString(mazeString);
+    vector<Robot*> robots;
+    robots.push_back(new DeepLookRobot(maze));
+    robots.push_back(new DeepLookRobot(maze));
+    vector<Point> initial;
+    initial.push_back(Point(2,0));
+    initial.push_back(Point(0,3));
+    Engine engine(maze, robots, initial);
+    engine.init();
+    for (int i=0; i<points1.size(); ++i) {
+        engine.doStep();
+        engine.meets();
+        QCOMPARE(engine.robots[0].currentPosition, points0[i]);
+        QCOMPARE(engine.robots[1].currentPosition, points1[i]);
+    }
+    QCOMPARE(engine.isAllKnownMaze(), true);
+    delete maze;
+}

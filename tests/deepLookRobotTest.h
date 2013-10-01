@@ -17,6 +17,7 @@ signals:
 private slots:
     void run();
     void encounter();
+    void needWait();
 };
 
 #endif // DEEPLOOKROBOTTEST_H
