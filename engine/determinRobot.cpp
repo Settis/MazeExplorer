@@ -42,5 +42,5 @@ void DeterminRobot::mergeKnowledge(const Robot &robot)
     unsigned int** rvm = ((DeterminRobot*)&robot)->visitsMap;
     for (int i=0; i<x; ++i)
         for (int j=0; j<y; ++j)
-            visitsMap[i][j] += rvm[i][j];
+            visitsMap[i][j] = std::max(visitsMap[i][j], rvm[i][j]);
 }
